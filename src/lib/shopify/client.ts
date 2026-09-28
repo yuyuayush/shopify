@@ -68,8 +68,8 @@ export async function shopifyFetch<T>({
       cache,
       ...(tags && { next: { tags } }),
       body: JSON.stringify({
-        ...(query && { query }),
-        ...(variables && { variables }),
+        ...(query ? { query } : {}),
+        ...(variables ? { variables } : {}),
       }),
     });
 
@@ -627,7 +627,7 @@ export async function getCustomer(customerAccessToken: string): Promise<Customer
   if (!c) return undefined;
 
   const addresses = c.addresses?.edges?.map((e: any) => e.node) || [];
-  const orders = c.orders?.edges?.map((e: any) => reshapeOrder(e.node)).filter((o): o is Order => o !== undefined) || [];
+  const orders = c.orders?.edges?.map((e: any) => reshapeOrder(e.node)).filter((o: Order | undefined): o is Order => o !== undefined) || [];
 
   return {
     id: c.id,

@@ -33,7 +33,7 @@ export interface ProductVariant {
   selectedOptions: SelectedOption[];
   price: Money;
   compareAtPrice: Money | null;
-  image: Image | null;
+  image?: Image | null;
   sku?: string;
 }
 
